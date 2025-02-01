@@ -148,61 +148,44 @@
     </div>
 
     <script>
-        let currentInput = '';
-        let operator = null;
-        let previousInput = '';
+        let expression = ''; // Хранит текущее выражение
 
         function appendNumber(number) {
-            if (currentInput.length < 10) {
-                currentInput += number;
-                updateDisplay();
-            }
+            expression += number; // Добавляем число в выражение
+            updateDisplay();
         }
 
-        function appendOperator(op) {
-            if (currentInput === '') return;
-            if (previousInput !== '') calculateResult();
-            operator = op;
-            previousInput = currentInput;
-            currentInput = '';
+        function appendOperator(operator) {
+            if (expression === '') return; // Защита от пустого выражения
+            const lastChar = expression[expression.length - 1];
+            if (['+', '-', '*', '/'].includes(lastChar)) {
+                // Если последний символ — оператор, заменяем его новым
+                expression = expression.slice(0, -1) + operator;
+            } else {
+                expression += operator; // Добавляем оператор в выражение
+            }
+            updateDisplay();
         }
 
         function calculateResult() {
-            if (operator === null || currentInput === '') return;
-            const prev = parseFloat(previousInput);
-            const current = parseFloat(currentInput);
-            let result = 0;
-
-            switch (operator) {
-                case '+':
-                    result = prev + current;
-                    break;
-                case '-':
-                    result = prev - current;
-                    break;
-                case '*':
-                    result = prev * current;
-                    break;
-                case '/':
-                    result = prev / current;
-                    break;
+            try {
+                const result = eval(expression); // Вычисляем результат
+                expression = result.toString(); // Обновляем выражение
+                updateDisplay();
+            } catch (error) {
+                expression = ''; // Очищаем выражение при ошибке
+                updateDisplay('Ошибка');
             }
-
-            currentInput = result.toString();
-            operator = null;
-            previousInput = '';
-            updateDisplay();
         }
 
         function clearDisplay() {
-            currentInput = '';
-            operator = null;
-            previousInput = '';
+            expression = ''; // Очищаем выражение
             updateDisplay();
         }
 
-        function updateDisplay() {
-            document.getElementById('display').textContent = currentInput || '0';
+        function updateDisplay(value = null) {
+            const display = document.getElementById('display');
+            display.textContent = value || expression || '0'; // Показываем значение или "0"
         }
     </script>
 </body>
