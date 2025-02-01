@@ -94,6 +94,26 @@
         .button.equal:hover {
             background-color: #2da94f;
         }
+
+        .button.zero {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 480px) {
+            .calculator {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .display {
+                font-size: 20px;
+            }
+
+            .button {
+                font-size: 16px;
+                height: 50px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -122,7 +142,7 @@
             <button class="button" onclick="appendNumber('3')">3</button>
             <button class="button equal" onclick="calculateResult()">=</button>
 
-            <button class="button" onclick="appendNumber('0')" style="grid-column: span 2;">0</button>
+            <button class="button zero" onclick="appendNumber('0')">0</button>
             <button class="button" onclick="appendNumber('.')">.</button>
         </div>
     </div>
