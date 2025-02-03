@@ -4,122 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Калькулятор</title>
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f9;
-        }
-
-        .calculator {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 320px;
-            max-width: 100%;
-            margin: 0 auto;
-        }
-
-        .display {
-            background-color: #ffffff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            font-size: 24px;
-            text-align: right;
-            font-family: 'Courier New', monospace;
-            margin-bottom: 20px;
-            height: 50px;
-            overflow: hidden;
-        }
-
-        .buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-
-        .button {
-            background-color: #e0e0e0;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.1s;
-            height: 60px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .button:hover {
-            background-color: #d0d0d0;
-        }
-
-        .button:active {
-            background-color: #c0c0c0;
-            transform: scale(0.95);
-        }
-
-        .button.operator {
-            background-color: #ff9500;
-            color: white;
-        }
-
-        .button.operator:hover {
-            background-color: #e68a00;
-        }
-
-        .button.clear {
-            background-color: #ff3b30;
-            color: white;
-        }
-
-        .button.clear:hover {
-            background-color: #e63329;
-        }
-
-        .button.equal {
-            background-color: #34c759;
-            color: white;
-            grid-column: span 2;
-        }
-
-        .button.equal:hover {
-            background-color: #2da94f;
-        }
-
-        .button.zero {
-            grid-column: span 2;
-        }
-
-        @media (max-width: 480px) {
-            .calculator {
-                width: 100%;
-                padding: 10px;
-            }
-
-            .display {
-                font-size: 20px;
-            }
-
-            .button {
-                font-size: 16px;
-                height: 50px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="calculator">
         <!-- Дисплей -->
         <div class="display" id="display">0</div>
+
+        <!-- История -->
+        <div class="history" id="history"></div>
 
         <!-- Кнопки -->
         <div class="buttons">
@@ -147,46 +40,6 @@
         </div>
     </div>
 
-    <script>
-        let expression = ''; // Хранит текущее выражение
-
-        function appendNumber(number) {
-            expression += number; // Добавляем число в выражение
-            updateDisplay();
-        }
-
-        function appendOperator(operator) {
-            if (expression === '') return; // Защита от пустого выражения
-            const lastChar = expression[expression.length - 1];
-            if (['+', '-', '*', '/'].includes(lastChar)) {
-                // Если последний символ — оператор, заменяем его новым
-                expression = expression.slice(0, -1) + operator;
-            } else {
-                expression += operator; // Добавляем оператор в выражение
-            }
-            updateDisplay();
-        }
-
-        function calculateResult() {
-            try {
-                const result = eval(expression); // Вычисляем результат
-                expression = result.toString(); // Обновляем выражение
-                updateDisplay();
-            } catch (error) {
-                expression = ''; // Очищаем выражение при ошибке
-                updateDisplay('Ошибка');
-            }
-        }
-
-        function clearDisplay() {
-            expression = ''; // Очищаем выражение
-            updateDisplay();
-        }
-
-        function updateDisplay(value = null) {
-            const display = document.getElementById('display');
-            display.textContent = value || expression || '0'; // Показываем значение или "0"
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
