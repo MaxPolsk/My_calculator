@@ -92,7 +92,7 @@ body {
 .button.equal {
     background-color: #34c759;
     color: white;
-    grid-column: span 2;
+    grid-column: span 1; /* Кнопка "=" занимает одно место */
 }
 
 .button.equal:hover {
@@ -100,7 +100,7 @@ body {
 }
 
 .button.zero {
-    grid-column: span 2;
+    grid-column: span 2; /* Кнопка "0" занимает два места */
 }
 
 @media (max-width: 480px) {
