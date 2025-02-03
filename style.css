@@ -13,8 +13,8 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 320px;
-    max-width: 100%;
+    width: 100%;
+    max-width: 320px;
     margin: 0 auto;
 }
 
@@ -23,11 +23,12 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 15px;
-    font-size: 24px;
+    font-size: 32px; /* Увеличенный шрифт */
+    font-weight: bold; /* Жирный шрифт */
     text-align: right;
     font-family: 'Courier New', monospace;
     margin-bottom: 20px;
-    height: 50px;
+    height: 60px; /* Увеличенная высота */
     overflow-x: auto;
     white-space: nowrap;
 }
@@ -51,11 +52,11 @@ body {
     background-color: #e0e0e0;
     border: none;
     border-radius: 5px;
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 24px; /* Увеличенный шрифт */
+    font-weight: bold; /* Жирный шрифт */
     cursor: pointer;
     transition: background-color 0.3s, transform 0.1s;
-    height: 60px;
+    height: 70px; /* Увеличенная высота */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -104,16 +105,17 @@ body {
 
 @media (max-width: 480px) {
     .calculator {
-        width: 100%;
-        padding: 10px;
+        width: 90%; /* Адаптация под маленькие экраны */
+        padding: 15px;
     }
 
     .display {
-        font-size: 20px;
+        font-size: 28px; /* Уменьшенный шрифт для маленьких экранов */
+        height: 50px;
     }
 
     .button {
-        font-size: 16px;
-        height: 50px;
+        font-size: 20px; /* Уменьшенный шрифт для маленьких экранов */
+        height: 60px;
     }
 }
