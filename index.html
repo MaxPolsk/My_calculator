@@ -110,6 +110,15 @@
             grid-column: span 2; /* Кнопка "0" занимает два места */
         }
 
+        .button.backspace {
+            background-color: #555;
+            color: white;
+        }
+
+        .button.backspace:hover {
+            background-color: #777;
+        }
+
         @media (max-width: 480px) {
             .calculator {
                 width: 90%; /* Адаптация под маленькие экраны */
@@ -163,6 +172,9 @@
             <button class="button zero" onclick="appendNumber('0')">0</button>
             <button class="button" onclick="appendNumber('.')">.</button>
             <button class="button equal" onclick="calculateResult()">=</button>
+
+            <!-- Кнопка "Стереть" -->
+            <button class="button backspace" onclick="backspace()">←</button>
         </div>
     </div>
 
@@ -210,6 +222,12 @@
             updateDisplay();
         }
 
+        // Удаление последнего символа
+        function backspace() {
+            expression = expression.slice(0, -1);
+            updateDisplay();
+        }
+
         // Обновление дисплея
         function updateDisplay(value = null) {
             const display = document.getElementById('display');
@@ -237,8 +255,7 @@
             } else if (key === 'Enter' || key === '=') {
                 calculateResult();
             } else if (key === 'Backspace') {
-                expression = expression.slice(0, -1);
-                updateDisplay();
+                backspace();
             } else if (key === 'Escape') {
                 clearDisplay();
             }
