@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Калькулятор</title>
     <style>
+        /* Стили остаются без изменений */
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
@@ -119,6 +120,9 @@
     </style>
 </head>
 <body>
+    <!-- Добавляем аудиоэлемент -->
+    <audio id="clickSound" src="https://www.soundjay.com/button/sounds/beep-07.mp3"></audio>
+
     <div class="calculator">
         <!-- Дисплей -->
         <div class="display" id="display">0</div>
@@ -127,34 +131,41 @@
         <!-- Кнопки -->
         <div class="buttons">
             <!-- Первая строка: 7 8 9 -->
-            <button class="button" onclick="appendNumber('7')">7</button>
-            <button class="button" onclick="appendNumber('8')">8</button>
-            <button class="button" onclick="appendNumber('9')">9</button>
-            <button class="button operator" onclick="appendOperator('/')">÷</button>
+            <button class="button" onclick="playSound(); appendNumber('7')">7</button>
+            <button class="button" onclick="playSound(); appendNumber('8')">8</button>
+            <button class="button" onclick="playSound(); appendNumber('9')">9</button>
+            <button class="button operator" onclick="playSound(); appendOperator('/')">÷</button>
             <!-- Вторая строка: 4 5 6 -->
-            <button class="button" onclick="appendNumber('4')">4</button>
-            <button class="button" onclick="appendNumber('5')">5</button>
-            <button class="button" onclick="appendNumber('6')">6</button>
-            <button class="button operator" onclick="appendOperator('*')">×</button>
+            <button class="button" onclick="playSound(); appendNumber('4')">4</button>
+            <button class="button" onclick="playSound(); appendNumber('5')">5</button>
+            <button class="button" onclick="playSound(); appendNumber('6')">6</button>
+            <button class="button operator" onclick="playSound(); appendOperator('*')">×</button>
             <!-- Третья строка: 1 2 3 -->
-            <button class="button" onclick="appendNumber('1')">1</button>
-            <button class="button" onclick="appendNumber('2')">2</button>
-            <button class="button" onclick="appendNumber('3')">3</button>
-            <button class="button operator" onclick="appendOperator('-')">−</button>
+            <button class="button" onclick="playSound(); appendNumber('1')">1</button>
+            <button class="button" onclick="playSound(); appendNumber('2')">2</button>
+            <button class="button" onclick="playSound(); appendNumber('3')">3</button>
+            <button class="button operator" onclick="playSound(); appendOperator('-')">−</button>
             <!-- Четвертая строка: 0 . % -->
-            <button class="button zero" onclick="appendNumber('0')">0</button>
-            <button class="button" onclick="appendNumber('.')">.</button>
-            <button class="button operator" onclick="applyPercentage()">%</button>
-            <button class="button equal" onclick="calculateResult()">=</button>
+            <button class="button zero" onclick="playSound(); appendNumber('0')">0</button>
+            <button class="button" onclick="playSound(); appendNumber('.')">.</button>
+            <button class="button operator" onclick="playSound(); applyPercentage()">%</button>
+            <button class="button equal" onclick="playSound(); calculateResult()">=</button>
             <!-- Кнопка "Очистить" -->
-            <button class="button clear" onclick="clearDisplay()">C</button>
+            <button class="button clear" onclick="playSound(); clearDisplay()">C</button>
             <!-- Кнопка "Стереть" -->
-            <button class="button backspace" onclick="backspace()">←</button>
+            <button class="button backspace" onclick="playSound(); backspace()">←</button>
         </div>
     </div>
     <script>
         let expression = ''; // Хранит текущее выражение
         const history = []; // Хранит историю вычислений
+
+        // Функция для воспроизведения звука
+        function playSound() {
+            const sound = document.getElementById('clickSound');
+            sound.currentTime = 0; // Сброс позиции воспроизведения
+            sound.play();
+        }
 
         // Добавление числа
         function appendNumber(number) {
@@ -255,14 +266,19 @@
         document.addEventListener('keydown', (event) => {
             const key = event.key;
             if (/[0-9.]/.test(key)) {
+                playSound();
                 appendNumber(key);
             } else if (['+', '-', '*', '/'].includes(key)) {
+                playSound();
                 appendOperator(key);
             } else if (key === 'Enter' || key === '=') {
+                playSound();
                 calculateResult();
             } else if (key === 'Backspace') {
+                playSound();
                 backspace();
             } else if (key === 'Escape') {
+                playSound();
                 clearDisplay();
             }
         });
