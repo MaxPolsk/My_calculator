@@ -4,7 +4,129 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Калькулятор</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+
+        .calculator {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .display {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            font-size: 32px; /* Увеличенный шрифт */
+            font-weight: bold; /* Жирный шрифт */
+            text-align: right;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 20px;
+            height: 60px; /* Увеличенная высота */
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .history {
+            font-size: 14px;
+            color: #888;
+            text-align: right;
+            margin-bottom: 10px;
+            height: 40px;
+            overflow-y: auto;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .button {
+            background-color: #e0e0e0;
+            border: none;
+            border-radius: 5px;
+            font-size: 24px; /* Увеличенный шрифт */
+            font-weight: bold; /* Жирный шрифт */
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+            height: 70px; /* Увеличенная высота */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button:hover {
+            background-color: #d0d0d0;
+        }
+
+        .button:active {
+            background-color: #c0c0c0;
+            transform: scale(0.95);
+        }
+
+        .button.operator {
+            background-color: #ff9500;
+            color: white;
+        }
+
+        .button.operator:hover {
+            background-color: #e68a00;
+        }
+
+        .button.clear {
+            background-color: #ff3b30;
+            color: white;
+        }
+
+        .button.clear:hover {
+            background-color: #e63329;
+        }
+
+        .button.equal {
+            background-color: #34c759;
+            color: white;
+            grid-column: span 1; /* Кнопка "=" занимает одно место */
+        }
+
+        .button.equal:hover {
+            background-color: #2da94f;
+        }
+
+        .button.zero {
+            grid-column: span 2; /* Кнопка "0" занимает два места */
+        }
+
+        @media (max-width: 480px) {
+            .calculator {
+                width: 90%; /* Адаптация под маленькие экраны */
+                padding: 15px;
+            }
+
+            .display {
+                font-size: 28px; /* Уменьшенный шрифт для маленьких экранов */
+                height: 50px;
+            }
+
+            .button {
+                font-size: 20px; /* Уменьшенный шрифт для маленьких экранов */
+                height: 60px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="calculator">
@@ -44,6 +166,83 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        let expression = ''; // Хранит текущее выражение
+        const history = []; // Хранит историю вычислений
+
+        // Добавление числа
+        function appendNumber(number) {
+            if (number === '.' && expression.includes('.')) return; // Запрет на несколько точек
+            expression += number;
+            updateDisplay();
+        }
+
+        // Добавление оператора
+        function appendOperator(operator) {
+            if (expression === '') return;
+            const lastChar = expression[expression.length - 1];
+            if (['+', '-', '*', '/'].includes(lastChar)) {
+                expression = expression.slice(0, -1) + operator;
+            } else {
+                expression += operator;
+            }
+            updateDisplay();
+        }
+
+        // Вычисление результата
+        function calculateResult() {
+            try {
+                const result = eval(expression);
+                history.push(`${expression} = ${result}`);
+                expression = result.toString();
+                updateDisplay();
+                updateHistory();
+            } catch (error) {
+                expression = '';
+                updateDisplay('Ошибка');
+                setTimeout(() => updateDisplay('0'), 1000);
+            }
+        }
+
+        // Очистка дисплея
+        function clearDisplay() {
+            expression = '';
+            updateDisplay();
+        }
+
+        // Обновление дисплея
+        function updateDisplay(value = null) {
+            const display = document.getElementById('display');
+            display.textContent = value || expression || '0';
+            if (value === 'Ошибка') {
+                display.classList.add('error');
+            } else {
+                display.classList.remove('error');
+            }
+        }
+
+        // Обновление истории
+        function updateHistory() {
+            const historyElement = document.getElementById('history');
+            historyElement.innerHTML = history.join('<br>');
+        }
+
+        // Обработка ввода с клавиатуры
+        document.addEventListener('keydown', (event) => {
+            const key = event.key;
+            if (/[0-9.]/.test(key)) {
+                appendNumber(key);
+            } else if (['+', '-', '*', '/'].includes(key)) {
+                appendOperator(key);
+            } else if (key === 'Enter' || key === '=') {
+                calculateResult();
+            } else if (key === 'Backspace') {
+                expression = expression.slice(0, -1);
+                updateDisplay();
+            } else if (key === 'Escape') {
+                clearDisplay();
+            }
+        });
+    </script>
 </body>
 </html>
