@@ -147,31 +147,32 @@
 
         <!-- Кнопки -->
         <div class="buttons">
-            <button class="button clear" onclick="clearDisplay()">C</button>
-            <button class="button operator" onclick="appendOperator('/')">÷</button>
-            <button class="button operator" onclick="appendOperator('*')">×</button>
-            <button class="button operator" onclick="appendOperator('-')">−</button>
-
-            <!-- Первая строка: 7 8 9 + -->
+            <!-- Первая строка: 7 8 9 -->
             <button class="button" onclick="appendNumber('7')">7</button>
             <button class="button" onclick="appendNumber('8')">8</button>
             <button class="button" onclick="appendNumber('9')">9</button>
-            <button class="button operator" onclick="appendOperator('+')">+</button>
+            <button class="button operator" onclick="appendOperator('/')">÷</button>
 
             <!-- Вторая строка: 4 5 6 -->
             <button class="button" onclick="appendNumber('4')">4</button>
             <button class="button" onclick="appendNumber('5')">5</button>
             <button class="button" onclick="appendNumber('6')">6</button>
+            <button class="button operator" onclick="appendOperator('*')">×</button>
 
-            <!-- Третья строка: 2 3 -->
+            <!-- Третья строка: 1 2 3 -->
+            <button class="button" onclick="appendNumber('1')">1</button>
             <button class="button" onclick="appendNumber('2')">2</button>
             <button class="button" onclick="appendNumber('3')">3</button>
+            <button class="button operator" onclick="appendOperator('-')">−</button>
 
-            <!-- Четвертая строка: 1 0 . = -->
-            <button class="button" onclick="appendNumber('1')">1</button>
+            <!-- Четвертая строка: 0 . = -->
             <button class="button zero" onclick="appendNumber('0')">0</button>
             <button class="button" onclick="appendNumber('.')">.</button>
             <button class="button equal" onclick="calculateResult()">=</button>
+            <button class="button operator" onclick="appendOperator('+')">+</button>
+
+            <!-- Кнопка "Очистить" -->
+            <button class="button clear" onclick="clearDisplay()">C</button>
 
             <!-- Кнопка "Стереть" -->
             <button class="button backspace" onclick="backspace()">←</button>
