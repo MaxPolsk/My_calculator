@@ -181,10 +181,10 @@
             <button class="button" onclick="appendNumber('.')">.</button>
             <button class="button operator" onclick="applyPercentage()">%</button>
             <button class="button equal" onclick="calculateResult()">=</button>
-            <!-- Нижняя строка: C = ← -->
+            <!-- Нижняя строка: C ← + -->
             <button class="button clear" onclick="clearDisplay()">C</button>
-            <button class="button equal" onclick="calculateResult()">=</button>
             <button class="button backspace" onclick="backspace()">←</button>
+            <button class="button operator" onclick="appendOperator('+')">+</button>
         </div>
     </div>
     <script>
@@ -196,14 +196,16 @@
             // Запрет на несколько точек
             if (number === '.' && expression.includes('.')) return;
 
-            // Запрет на два "0" подряд
-            if (number === '0' && expression === '0') return;
-
-            // Если выражение начинается с "0" и следующий символ не точка, то заменяем "0"
-            if (expression === '0' && number !== '.') {
-                expression = number;
-            } else {
+            // Если выражение пустое или последний символ — оператор, добавляем число
+            if (expression === '' || ['+', '-', '*', '/'].includes(expression.slice(-1))) {
                 expression += number;
+            } else {
+                // Иначе заменяем последний ноль на новое число
+                if (expression.slice(-1) === '0') {
+                    expression = expression.slice(0, -1) + number;
+                } else {
+                    expression += number;
+                }
             }
 
             updateDisplay();
@@ -231,6 +233,7 @@
                 expression = expression.slice(0, -lastNumber.length) + percentageValue;
                 updateDisplay();
             } catch (error) {
+                expression = '';
                 updateDisplay('Ошибка');
                 setTimeout(() => updateDisplay('0'), 1000);
             }
