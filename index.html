@@ -14,7 +14,6 @@
             height: 100vh;
             background-color: #f4f4f9;
         }
-
         .calculator {
             background-color: #ffffff;
             padding: 20px;
@@ -24,7 +23,6 @@
             max-width: 320px;
             margin: 0 auto;
         }
-
         .display {
             background-color: #ffffff;
             border: 1px solid #ddd;
@@ -39,7 +37,6 @@
             overflow-x: auto;
             white-space: nowrap;
         }
-
         .history {
             font-size: 14px;
             color: #888;
@@ -48,13 +45,11 @@
             height: 40px;
             overflow-y: auto;
         }
-
         .buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 10px;
         }
-
         .button {
             background-color: #e0e0e0;
             border: none;
@@ -68,68 +63,54 @@
             justify-content: center;
             align-items: center;
         }
-
         .button:hover {
             background-color: #d0d0d0;
         }
-
         .button:active {
             background-color: #c0c0c0;
             transform: scale(0.95);
         }
-
         .button.operator {
             background-color: #ff9500;
             color: white;
         }
-
         .button.operator:hover {
             background-color: #e68a00;
         }
-
         .button.clear {
             background-color: #ff3b30;
             color: white;
         }
-
         .button.clear:hover {
             background-color: #e63329;
         }
-
         .button.equal {
             background-color: #34c759;
             color: white;
             grid-column: span 1; /* Кнопка "=" занимает одно место */
         }
-
         .button.equal:hover {
             background-color: #2da94f;
         }
-
         .button.zero {
             grid-column: span 2; /* Кнопка "0" занимает два места */
         }
-
         .button.backspace {
             background-color: #555;
             color: white;
         }
-
         .button.backspace:hover {
             background-color: #777;
         }
-
         @media (max-width: 480px) {
             .calculator {
                 width: 90%; /* Адаптация под маленькие экраны */
                 padding: 15px;
             }
-
             .display {
                 font-size: 28px; /* Уменьшенный шрифт для маленьких экранов */
                 height: 50px;
             }
-
             .button {
                 font-size: 20px; /* Уменьшенный шрифт для маленьких экранов */
                 height: 60px;
@@ -141,10 +122,8 @@
     <div class="calculator">
         <!-- Дисплей -->
         <div class="display" id="display">0</div>
-
         <!-- История -->
         <div class="history" id="history"></div>
-
         <!-- Кнопки -->
         <div class="buttons">
             <!-- Первая строка: 7 8 9 -->
@@ -152,41 +131,46 @@
             <button class="button" onclick="appendNumber('8')">8</button>
             <button class="button" onclick="appendNumber('9')">9</button>
             <button class="button operator" onclick="appendOperator('/')">÷</button>
-
             <!-- Вторая строка: 4 5 6 -->
             <button class="button" onclick="appendNumber('4')">4</button>
             <button class="button" onclick="appendNumber('5')">5</button>
             <button class="button" onclick="appendNumber('6')">6</button>
             <button class="button operator" onclick="appendOperator('*')">×</button>
-
             <!-- Третья строка: 1 2 3 -->
             <button class="button" onclick="appendNumber('1')">1</button>
             <button class="button" onclick="appendNumber('2')">2</button>
             <button class="button" onclick="appendNumber('3')">3</button>
             <button class="button operator" onclick="appendOperator('-')">−</button>
-
-            <!-- Четвертая строка: 0 . = -->
+            <!-- Четвертая строка: 0 . + -->
             <button class="button zero" onclick="appendNumber('0')">0</button>
             <button class="button" onclick="appendNumber('.')">.</button>
-            <button class="button equal" onclick="calculateResult()">=</button>
             <button class="button operator" onclick="appendOperator('+')">+</button>
-
+            <button class="button equal" onclick="calculateResult()">=</button>
             <!-- Кнопка "Очистить" -->
             <button class="button clear" onclick="clearDisplay()">C</button>
-
             <!-- Кнопка "Стереть" -->
             <button class="button backspace" onclick="backspace()">←</button>
         </div>
     </div>
-
     <script>
         let expression = ''; // Хранит текущее выражение
         const history = []; // Хранит историю вычислений
 
         // Добавление числа
         function appendNumber(number) {
-            if (number === '.' && expression.includes('.')) return; // Запрет на несколько точек
-            expression += number;
+            // Запрет на несколько точек
+            if (number === '.' && expression.includes('.')) return;
+
+            // Запрет на два "0" подряд
+            if (number === '0' && expression === '0') return;
+
+            // Если выражение начинается с "0" и следующий символ не точка, то заменяем "0"
+            if (expression === '0' && number !== '.') {
+                expression = number;
+            } else {
+                expression += number;
+            }
+
             updateDisplay();
         }
 
