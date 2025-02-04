@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Калькулятор</title>
     <style>
+        /* Подключение шрифта Digital-7 */
+        @font-face {
+            font-family: 'Digital-7';
+            src: url('https://www.dafontfree.net/webfonts/Digital-7/digital-7.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         /* Общие стили */
         body {
             font-family: 'Roboto', sans-serif;
@@ -44,14 +52,15 @@
         }
 
         .display {
-            background-color: #ffffff;
+            background-color: #000000; /* Чёрный фон для дисплея */
+            color: #00ff00; /* Зелёный текст, как в старых калькуляторах */
             border: 1px solid #ddd;
             border-radius: 5px;
             padding: 15px;
             font-size: 32px; /* Увеличенный шрифт */
             font-weight: bold; /* Жирный шрифт */
             text-align: right;
-            font-family: 'Courier New', monospace;
+            font-family: 'Digital-7', monospace; /* Новый шрифт */
             margin-bottom: 20px;
             height: 60px; /* Увеличенная высота */
             overflow-x: auto;
