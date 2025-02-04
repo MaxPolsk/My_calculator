@@ -198,14 +198,15 @@
 
             // Если выражение пустое или последний символ — оператор, добавляем число
             if (expression === '' || ['+', '-', '*', '/'].includes(expression.slice(-1))) {
-                expression += number;
-            } else {
-                // Иначе заменяем последний ноль на новое число
-                if (expression.slice(-1) === '0') {
-                    expression = expression.slice(0, -1) + number;
+                if (number === '0' && expression === '') {
+                    // Если выражение пустое и вводится ноль, оставляем только один ноль
+                    expression = '0';
                 } else {
                     expression += number;
                 }
+            } else {
+                // Если последний символ — не оператор, добавляем число
+                expression += number;
             }
 
             updateDisplay();
