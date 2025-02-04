@@ -150,12 +150,10 @@
             <button class="button" onclick="playSound(); appendNumber('.')">.</button>
             <button class="button operator" onclick="playSound(); applyPercentage()">%</button>
             <button class="button operator" onclick="playSound(); appendOperator('+')">+</button>
-            <!-- Кнопка "=" -->
-            <button class="button equal" onclick="playSound(); calculateResult()">=</button>
-            <!-- Кнопка "Очистить" -->
+            <!-- Нижняя строка: C ← = -->
             <button class="button clear" onclick="playSound(); clearDisplay()">C</button>
-            <!-- Кнопка "Стереть" -->
             <button class="button backspace" onclick="playSound(); backspace()">←</button>
+            <button class="button equal" onclick="playSound(); calculateResult()">=</button>
         </div>
     </div>
     <script>
@@ -166,7 +164,9 @@
         function playSound() {
             const sound = document.getElementById('clickSound');
             sound.currentTime = 0; // Сброс позиции воспроизведения
-            sound.play();
+            sound.play().catch((error) => {
+                console.warn('Звук не воспроизведён:', error);
+            });
         }
 
         // Добавление числа
