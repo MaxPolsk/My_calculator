@@ -141,10 +141,10 @@
             <button class="button" onclick="appendNumber('2')">2</button>
             <button class="button" onclick="appendNumber('3')">3</button>
             <button class="button operator" onclick="appendOperator('-')">−</button>
-            <!-- Четвертая строка: 0 . + -->
+            <!-- Четвертая строка: 0 . % -->
             <button class="button zero" onclick="appendNumber('0')">0</button>
             <button class="button" onclick="appendNumber('.')">.</button>
-            <button class="button operator" onclick="appendOperator('+')">+</button>
+            <button class="button operator" onclick="applyPercentage()">%</button>
             <button class="button equal" onclick="calculateResult()">=</button>
             <!-- Кнопка "Очистить" -->
             <button class="button clear" onclick="clearDisplay()">C</button>
@@ -184,6 +184,27 @@
                 expression += operator;
             }
             updateDisplay();
+        }
+
+        // Применение процента
+        function applyPercentage() {
+            try {
+                const lastNumber = getLastNumber(expression); // Получаем последнее число
+                if (!lastNumber) return;
+
+                const percentageValue = (parseFloat(lastNumber) / 100).toString();
+                expression = expression.slice(0, -lastNumber.length) + percentageValue;
+                updateDisplay();
+            } catch (error) {
+                updateDisplay('Ошибка');
+                setTimeout(() => updateDisplay('0'), 1000);
+            }
+        }
+
+        // Получение последнего числа из выражения
+        function getLastNumber(expr) {
+            const match = expr.match(/(\d+\.?\d*)$/); // Находим последнее число
+            return match ? match[0] : '';
         }
 
         // Вычисление результата
